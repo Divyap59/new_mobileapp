@@ -15,7 +15,8 @@ import FirebaseFirestore
 class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate {
     
 //MARK: Variables
- var arrData: [UserModel] = []
+    var arrData: [UserModel] = []
+    var arrData1: [String: Any] = ["name": "Diya"]
  var circularArr1 = ["1","2","3"]
  var circularArr2 = ["2","2","3"]
  var circularArr3 = ["3","2","3"]
@@ -28,7 +29,7 @@ class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate
  var meetingDescArr2 = ["   In-person","   In-person","  Coffee on me"]
  var meetingDescArr3 = ["  Coffee on me","   In-person","  Coffee on me"]
  var straightLineArr = [".",".","."]
- var db: Firestore!
+    var db = Firestore.firestore()
 
 //MARK: IBOutlets
     
@@ -44,6 +45,7 @@ class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate
         super.viewDidLoad()
         setDelegateAndDataSource()
         getDatabaseRecords()
+       // postData()
        // db = Firestore.firestore()
         
         
@@ -71,6 +73,10 @@ class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate
         // Do any additional setup after loading the view.
     }
     
+//    required init?(coder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+    
 
 //MARK: Functions
     func setDelegateAndDataSource(){
@@ -81,6 +87,7 @@ class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate
 //MARK: IBAction
     
 @IBAction func confirmButton(_ sender: Any) {
+   // sendData()
    // Database.database().reference().child("RSVP").child("yourchild name").setValue(["name": "DIvya", "ID": "1"])
 //    let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //    let popupVC = storyboard.instantiateViewController(withIdentifier: "PopUpViewController") as! PopUpViewController
@@ -169,17 +176,17 @@ class ConfirmMeetingVC: UIViewController,UIPopoverPresentationControllerDelegate
     
 //MARK: Post Data on Firestore Database
     func sendData(){
-        db.collection("PlannedMeeting").document("MeetingInfo").setData([
+        db.collection("ConfirmMeeting").document("Data").setData([
             "name": "Peacock",
             "type": "Herbivore",
             "colors": ["Green", "White", "Blue", "Black"]
         ])
-        db.collection("animal").document("mammal").setData([
-            "name": "Bat",
-            "type": "Herbivore",
-            "norturnal": true,
-            "colors": ["Brown", "Black"]
-        ], merge: true)
+//        db.collection("animal").document("mammal").setData([
+//            "name": "Bat",
+//            "type": "Herbivore",
+//            "norturnal": true,
+//            "colors": ["Brown", "Black"]
+//        ], merge: true)
     }
     
     func postData(){
@@ -244,8 +251,26 @@ extension ConfirmMeetingVC: UITableViewDelegate, UITableViewDataSource{
                let user = arrData[indexPath.row]
                 cell.circleLabel1?.text = circularArr1[indexPath.row]
                 cell.straightLine1?.text = straightLineArr[indexPath.row]
-                cell.meetingReasonLabel?.text = meetingReasonArr1[indexPath.row]
                 cell.meetingPurposeLabel?.text = user.meetingReason
+            db.collection("Meeting_Create").document("ConfirmData").setData(arrData1)
+           // sendData()
+            
+           // db.collection("CreateMeetingData").document("data").setData(["Name": "Divya","MeetingReason":"Collaborate"])
+            
+
+           // let refs = Database.database().reference().child("List_of_Data")
+
+            //refs = self.db.collection("sdghfdgfsdh").addDocument(data: [cell.meetingPurposeLabel?.text = user.meetingReason])
+            
+            
+            // cell.meetingPurposeLabel?.text = user.meetingReason
+ //            db.collection("CreateMeetingData").document("data").setValue(["Name": "Divya","MeetingReason": "Collaboration"], forKey: "Divya") as? String
+             //let databaseRef = Database.database().reference()
+            // databaseRef.child("CreateMeetin
+               // cell.meetingReasonLabel?.text = meetingReasonArr1[indexPath.row]gData").child("data").setValue([cell.meetingPurposeLabel?.text = user.meetingReason])
+           // db.collection("ConfirmMeetingData").document("data").setData([cell.meetingPurposeLabel?.text = user.meetingReason])
+           // databaseRef.child("CreateMeeting").child("data").setValue(cell.meetingPurposeLabel?.text = user.meetingReason) as! NSString
+               // cell.meetingPurposeLabel?.text = user.meetingReason
 
            // postData()
             
